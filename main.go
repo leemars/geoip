@@ -223,9 +223,11 @@ func main() {
 	}
 
 	cidrList := make(map[string][]*router.CIDR)
-	if err := getCidrPerCountry(*ipv4File, ccMap, cidrList); err != nil {
-		fmt.Println("Error loading IPv4 file:", err)
-		os.Exit(1)
+	if *ipv4File != "" {
+		if err := getCidrPerCountry(*ipv4File, ccMap, cidrList); err != nil {
+			fmt.Println("Error loading IPv4 file:", err)
+			os.Exit(1)
+		}
 	}
 	if *ipv4CNURI != "" {
 		if err := changeCNIPv4Cidr(*ipv4CNURI, ccMap, cidrList); err != nil {
@@ -233,9 +235,11 @@ func main() {
 			os.Exit(1)
 		}
 	}
-	if err := getCidrPerCountry(*ipv6File, ccMap, cidrList); err != nil {
-		fmt.Println("Error loading IPv6 file:", err)
-		os.Exit(1)
+	if *ipv6File != "" {
+		if err := getCidrPerCountry(*ipv6File, ccMap, cidrList); err != nil {
+			fmt.Println("Error loading IPv6 file:", err)
+			os.Exit(1)
+		}
 	}
 	if err := getCidrPerFile(cidrList); err != nil {
 		fmt.Println("Error looping data directory:", err)
